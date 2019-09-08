@@ -7,7 +7,7 @@ class Bookshelf extends React.Component {
             <div className="bookshelf">
                 <h2 className="bookshelf-title">Currently Reading</h2>
                 <div className="bookshelf-books">
-                    <ol className="books-grid">
+                    <ol className="books-grid"> {/* make dynamic */}
                         <Book />
                         <Book />
                     </ol>

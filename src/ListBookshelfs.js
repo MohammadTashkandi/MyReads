@@ -1,5 +1,6 @@
 import React from 'react'
 import Bookshelf from './Bookshelf.js'
+import { Link } from 'react-router-dom'
 
 class ListBookshelfs extends React.Component {
     render() {
@@ -8,13 +9,13 @@ class ListBookshelfs extends React.Component {
               <div className="list-books-title">
                 <h1>MyReads</h1>
               </div>
-              <div className="list-books-content">
+              <div className="list-books-content"> {/* Make dynamic */}
                 <Bookshelf />
                 <Bookshelf />
                 <Bookshelf />
               </div>
               <div className="open-search">
-                <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+                <Link to='/search' className='open-search'><button>Add a book</button></Link>
               </div>
             </div>
         )

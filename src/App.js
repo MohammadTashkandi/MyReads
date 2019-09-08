@@ -7,18 +7,55 @@ import ListBookshelfs from './ListBookshelfs.js'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
+    currentlyReading: [],
+    wantToRead: [],
+    read: []
+  }
+
+  componentDidMount() {
+    this.getAllBooks()
+  }
+
+  getAllBooks = () => {
+    BooksAPI.getAll()
+      .then((books) => {
+        books.map((book) => {
+          if (book.shelf === 'currentlyReading') {
+            this.addToCurrentlyReading(book)
+          } else if (book.shelf === 'wantToRead') {
+            this.addToWantToRead(book)
+          } else if (book.shelf === 'read') {
+            this.addToRead(book)
+          }
+        })
+      })
+  }
+
+  addToCurrentlyReading = (book) => {
+    book.shelf = 'currentlyReading'
+    this.setState((prevState) => ({
+      currentlyReading: prevState.currentlyReading.concat([book])
+    }))
+  }
+
+  addToWantToRead = (book) => {
+    book.shelf = 'wantToRead'
+    this.setState((prevState) => ({
+      wantToRead: prevState.wantToRead.concat([book])
+    }))
+  }
+
+  addToRead = (book) => {
+    book.shelf = 'read'
+    this.setState((prevState) => ({
+      read: prevState.read.concat([book])
+    }))
   }
 
   render() {
     return (
       <div className="app">
-        <Route exact path='/' render={() => <ListBookshelfs />} />
+        <Route exact path='/' render={() => <ListBookshelfs currentlyReading={this.state.currentlyReading} wantToRead={this.state.wantToRead} read={this.state.read} />} />
         <Route path='/search' render={() => <Search />} />
       </div>
     )

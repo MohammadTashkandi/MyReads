@@ -10,9 +10,9 @@ class ListBookshelfs extends React.Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content"> {/* Make dynamic */}
-                <Bookshelf name='Currently Reading' books={this.props.currentlyReading} />
-                <Bookshelf name='Want To Read' books={this.props.wantToRead} />
-                <Bookshelf name='Read' books={this.props.read} />
+                <Bookshelf name='Currently Reading' books={this.props.currentlyReading} moveBook={this.props.moveBook} />
+                <Bookshelf name='Want To Read' books={this.props.wantToRead} moveBook={this.props.moveBook} />
+                <Bookshelf name='Read' books={this.props.read} moveBook={this.props.moveBook} />
               </div>
               <div className="open-search">
                 <Link to='/search' className='open-search'><button>Add a book</button></Link>

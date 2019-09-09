@@ -9,7 +9,7 @@ class Bookshelf extends React.Component {
                 <div className="bookshelf-books">
                     <ol className="books-grid"> {/* make dynamic */}
                         {
-                            this.props.books.map((book) => <Book key={book.id} book={book} />)
+                            this.props.books.map((book) => <Book key={book.id} book={book} moveBook={this.props.moveBook} />)
                         }
                     </ol>
                 </div>

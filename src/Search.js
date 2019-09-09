@@ -19,9 +19,10 @@ class Search extends React.Component {
         
         BooksAPI.search(e.target.value)
             .then((books) => {
-                console.log(books)
                 this.setState(() => ({
-                    searchResult: books
+                    searchResult: books && books.constructor===Array ? (books) : (null) //When the search doesn't find a book it returns an object. If its an array then it found a book.
+                                                                                //So that line is for checking if books is an array. yes? assign to state. No? put null and the code below will render a message
+                                                                                // variable.contructor doesn't work if the variable is null. So you have to check first
                 }))
             })
     }
@@ -32,22 +33,22 @@ class Search extends React.Component {
                 <div className="search-books-bar">
                     <Link to='/' className='close-search'>Close</Link>
                     <div className="search-books-input-wrapper">
-                        {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                        <input onChange={this.handleChange} type="text" name='search' value={this.state.search} placeholder="Search by title or author" />
-
+                        <input 
+                            onChange={this.handleChange} 
+                            type="text" name='search' 
+                            value={this.state.search} 
+                            placeholder="Search by title or author" 
+                        />
                     </div>
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {
-                            this.state.searchResult.map((book) => (<Book key={book.id} book={book} moveBook={this.props.moveBook} />))
+                            this.state.searchResult ? (
+                                this.state.searchResult.map((book) => (<Book key={book.id} book={book} moveBook={this.props.moveBook} />))
+                            ) : (
+                                <h2>No books found</h2>
+                            )
                         }
                     </ol>
                 </div>

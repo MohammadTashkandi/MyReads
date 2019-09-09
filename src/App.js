@@ -47,7 +47,11 @@ class BooksApp extends React.Component {
       this.setState((prevState) => ({
         [prevShelf]: prevState[prevShelf].filter((currentBook) => book.id !== currentBook.id),
       }))
-    } else {
+    } else if (prevShelf === 'none') {
+      this.setState((prevState) => ({
+        [newShelf]: prevState[newShelf].concat(book)
+      }))
+    } else{
       this.setState((prevState) => ({
         [prevShelf]: prevState[prevShelf].filter((currentBook) => book.id !== currentBook.id),
         [newShelf]: prevState[newShelf].concat(book)

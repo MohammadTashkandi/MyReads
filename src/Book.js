@@ -1,4 +1,5 @@
 import React from 'react'
+import * as BooksAPI from './BooksAPI'
 
 class Book extends React.Component {
 
@@ -6,9 +7,25 @@ class Book extends React.Component {
         shelf: this.props.book.shelf
     }
 
+    componentDidMount() {
+        if(!this.props.book.shelf) { //The search api doesn't return book.shelf. So here we check if the book object has shelf property.
+                                    // yes? the shelf state will be assigned to it from the props. No? we will get the shelf from the get api
+            this.getBookInfo()
+        }
+    }
+
+    getBookInfo = () => {
+        BooksAPI.get(this.props.book.id)
+        .then((book) => {
+            this.setState(() => ({
+                shelf: book.shelf
+            }))
+        })
+    }
+
     onChange = (e) => {
         e.preventDefault()
-        this.props.moveBook(this.props.book, e.target.value, this.props.book.shelf)
+        this.props.moveBook(this.props.book, e.target.value, this.state.shelf)
     }
 
     render() {

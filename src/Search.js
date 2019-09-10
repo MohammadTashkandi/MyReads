@@ -15,17 +15,25 @@ class Search extends React.Component {
 
         this.setState(() => ({
             [e.target.name]: e.target.value
-        })) 
-        
-        BooksAPI.search(e.target.value)
-            .then((books) => {
-                console.log('what', books)
-                this.setState(() => ({
-                    searchResult: books && books.constructor===Array ? (books) : (null) //When the search doesn't find a book it returns an object. If its an array then it found a book.
-                                                                                //So that line is for checking if books is an array. yes? assign to state. No? put null and the code below will render a message
-                                                                                // variable.contructor doesn't work if the variable is null. So you have to check first
-                }))
-            })
+        }))
+
+        if (e.target.value === '') {
+            this.setState(() => ({
+                searchResult: []
+            }))
+        } else {
+            BooksAPI.search(e.target.value)
+                .then((books) => {
+                    if(this.state.search !== '') { //this will prevent the scenario where the api returns books after the user is done deleting the query
+                        this.setState(() => ({
+                            searchResult: books && books.constructor === Array ? (books) : (null) //When the search doesn't find a book it returns an object. If its an array then it found a book.
+                            //So that line is for checking if books is an array. yes? assign to state. No? put null and the code below will render a message
+                            // variable.contructor doesn't work if the variable is null. So you have to check first
+                        }))
+                    }
+                })
+        }
+
     }
 
     render() {
@@ -34,11 +42,11 @@ class Search extends React.Component {
                 <div className="search-books-bar">
                     <Link to='/' className='close-search'>Close</Link>
                     <div className="search-books-input-wrapper">
-                        <input 
-                            onChange={this.handleChange} 
-                            type="text" name='search' 
-                            value={this.state.search} 
-                            placeholder="Search by title or author" 
+                        <input
+                            onChange={this.handleChange}
+                            type="text" name='search'
+                            value={this.state.search}
+                            placeholder="Search by title or author"
                         />
                     </div>
                 </div>
@@ -48,8 +56,8 @@ class Search extends React.Component {
                             this.state.searchResult ? (
                                 this.state.searchResult.map((book) => (<Book key={book.id} book={book} moveBook={this.props.moveBook} />))
                             ) : (
-                                <h2>No books found</h2>
-                            )
+                                    <h2>No books found</h2>
+                                )
                         }
                     </ol>
                 </div>

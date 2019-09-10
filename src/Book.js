@@ -25,8 +25,14 @@ class Book extends React.Component {
     }
 
     onChange = (e) => {
-        e.preventDefault()
-        this.props.moveBook(this.props.book, e.target.value, this.state.shelf)
+        e.persist()
+
+        const prevShelf = this.state.shelf
+        this.props.moveBook(this.props.book, e.target.value, prevShelf)
+
+        this.setState(() => ({
+            shelf: e.target.value
+        }))
     }
 
     render() {
@@ -42,7 +48,7 @@ class Book extends React.Component {
                         }}>
                         </div>
                         <div className="book-shelf-changer">
-                            <select onChange={this.onChange} value={this.state.shelf || 'none'} name='shelf'>
+                            <select onChange={this.onChange} value={this.state.shelf} name='shelf'>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>)
                                     <option value="wantToRead">Want to Read</option>)

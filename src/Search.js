@@ -19,6 +19,7 @@ class Search extends React.Component {
         
         BooksAPI.search(e.target.value)
             .then((books) => {
+                console.log('what', books)
                 this.setState(() => ({
                     searchResult: books && books.constructor===Array ? (books) : (null) //When the search doesn't find a book it returns an object. If its an array then it found a book.
                                                                                 //So that line is for checking if books is an array. yes? assign to state. No? put null and the code below will render a message

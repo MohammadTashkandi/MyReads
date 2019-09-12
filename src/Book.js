@@ -1,12 +1,17 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import picNotAvailable from './icons/picture-not-available.jpg'
+import ReactStars from 'react-stars'
 
 class Book extends React.Component {
+
+    // MARK: State
 
     state = {
         shelf: this.props.book.shelf
     }
+
+    // MARK: Lifecycle functions
 
     componentDidMount() {
         if (!this.props.book.shelf) { //The search api doesn't return book.shelf. So here we check if the book object has shelf property.
@@ -14,6 +19,8 @@ class Book extends React.Component {
             this.getBookInfo()
         }
     }
+
+    // MARK: Custom functions
 
     getBookInfo = () => {
         BooksAPI.get(this.props.book.id)
@@ -34,6 +41,12 @@ class Book extends React.Component {
             shelf: e.target.value
         }))
     }
+
+    ratingChanged = (newRating) => {
+        // Here would be the code to update the database to include the new rating.
+    }
+
+    // MARK: Render
 
     render() {
         const { book } = this.props
@@ -63,6 +76,20 @@ class Book extends React.Component {
                             book.authors ? (book.authors.map((author) => <p key={author}>{author}</p>)) : (<p>Unknown</p>)
                         }
                     </div>
+                    {
+                        this.state.shelf === 'read' ? (
+                            <div>
+                                <ReactStars
+                                    count={5}
+                                    onChange={this.ratingChanged}
+                                    size={24}
+                                    color2={'#ffd700'} />
+                            </div>
+                        ) : (
+                                <p className='rating-unavailable'>Available after reading</p>
+                            )
+                    }
+
                 </div>
             </li>
         )

@@ -12,7 +12,7 @@ class BooksApp extends React.Component {
   state = {
     currentlyReading: [],
     wantToRead: [],
-    read: []
+    read: [],
   }
 
   // MARK: Lifecycle methods
@@ -26,11 +26,18 @@ class BooksApp extends React.Component {
   getAllBooks = () => {
     BooksAPI.getAll()
       .then((books) => {
-        books.map((book) => this.addBookToShelf(book))
+        this.setState(() => ({
+          currentlyReading: [],
+          wantToRead: [],
+          read: [],
+        }))
+        const test = books.map((book) => this.addBookToShelf(book))
+        console.log(test)
       })
   }
 
   addBookToShelf = (book) => {
+
     this.setState((prevState) => ({
       [book.shelf]: prevState[book.shelf].concat(book) //This will be: currentlyReading: prevState.currentlyReading.concat() (for example)
     }))
@@ -39,7 +46,11 @@ class BooksApp extends React.Component {
   moveBook = (book, newShelf, prevShelf) => {
     BooksAPI.update(book, newShelf) //update the backend
       .then(() => {
-        console.log('Moved')
+        
+        // this.getAllBooks()
+
+        // If you uncomment the above line and comment the lines 53-68 then the app will be a bit slower, but there is no possibility that
+        // the data in the frontend and the backend will be different. because after every update you are retrieving the book from the database
       })
     book.shelf = newShelf //update the frontend
 

@@ -4,11 +4,15 @@ import * as BooksAPI from './BooksAPI'
 import Book from './Book.js'
 
 class Search extends React.Component {
+    
+    // MARK: State
 
     state = {
         search: '',
         searchResult: [],
     }
+
+    // MARK: Custom functions
 
     handleChange = (e) => {
         e.persist()
@@ -35,6 +39,8 @@ class Search extends React.Component {
         }
 
     }
+
+    // MARK: Render
 
     render() {
         return (

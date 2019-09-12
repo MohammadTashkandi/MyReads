@@ -196,3 +196,8 @@ button:active {
   text-align: center;
   font-size: 0.8em;
 }
+
+.rating-unavailable {
+  color: lightgray;
+  font-size: 0.7em;
+}

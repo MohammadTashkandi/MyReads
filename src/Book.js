@@ -8,7 +8,7 @@ class Book extends React.Component {
     // MARK: State
 
     state = {
-        shelf: this.props.book.shelf
+        shelf: this.props.book.shelf,
     }
 
     // MARK: Lifecycle functions
@@ -43,6 +43,9 @@ class Book extends React.Component {
     }
 
     ratingChanged = (newRating) => {
+        this.setState(() => ({
+            rating: newRating
+        }))
         // Here would be the code to update the database to include the new rating.
     }
 
@@ -80,6 +83,7 @@ class Book extends React.Component {
                         this.state.shelf === 'read' ? (
                             <div>
                                 <ReactStars
+                                    value={this.state.rating}
                                     count={5}
                                     onChange={this.ratingChanged}
                                     size={24}

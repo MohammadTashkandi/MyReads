@@ -1,6 +1,6 @@
 # MyReads Project
 
-MyReads is a web app that allow the user to search for books and add them to certain categories (shelfes). The user can also see the books added in each shelf.
+MyReads is a web app that allows the user to search for books and add them to certain categories (shelves). The user can also see the books added in each shelf.
 
 ## TL;DR
 
